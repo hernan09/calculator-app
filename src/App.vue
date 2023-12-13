@@ -1,15 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <Menubar :model="items" class="custom-menubar" />
+  <router-view />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+//import HelloWorld from "./components/HelloWorld.vue";
+import Menubar from "primevue/menubar";
+import router from "./router.js";
+import { ref } from "vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Menubar,
+  },
+  setup() {
+    const items = ref([
+      { label: "Inicio", icon: "pi pi-home", command: () => navigateTo("/") },
+      {
+        label: "Productos",
+        icon: "pi pi-th-large",
+        command: () => navigateTo("/productos"),
+      },
+      {
+        label: "Servicios",
+        icon: "pi pi-cog",
+        command: () => navigateTo("/servicios"),
+      },
+      {
+        label: "Contacto",
+        icon: "pi pi-envelope",
+        command: () => navigateTo("/contactos"),
+      },
+    ]);
+
+    const navigateTo = (path) => {
+      console.log(path);
+      router.push(path);
+    };
+
+    return {
+      items,
+    };
   },
 };
 </script>
@@ -20,7 +52,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+.p-menubar {
+  background: rgba(76, 190, 255, 0.6);
+  padding: 0;
+  height: 50px;
 }
 </style>

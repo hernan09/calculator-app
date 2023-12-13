@@ -1,0 +1,19 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0; /* Esto evitará que haya un desbordamiento en el cuerpo de la página */
+    background: url("@/assets/images/fondo.svg") no-repeat center center fixed; /* Ruta a tu imagen SVG */
+    background-size: cover; /* Cubre todo el fondo */
+  }
+  
+  .contenedor {
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .content {
+    padding: 10px;
+    width: 100%;
+    color: white;
+    font-weight: 700;
+    border-radius: 3px;
+  }
