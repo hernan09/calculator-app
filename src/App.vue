@@ -1,37 +1,19 @@
 <template>
-  <Menubar :model="items" class="custom-menubar" />
   <router-view />
 </template>
 
 <script>
-//import HelloWorld from "./components/HelloWorld.vue";
-import Menubar from "primevue/menubar";
 import router from "./router.js";
 import { ref } from "vue";
 
 export default {
   name: "App",
   components: {
-    Menubar,
+    //Menubar,
   },
   setup() {
     const items = ref([
       { label: "Inicio", icon: "pi pi-home", command: () => navigateTo("/") },
-      {
-        label: "Productos",
-        icon: "pi pi-th-large",
-        command: () => navigateTo("/productos"),
-      },
-      {
-        label: "Servicios",
-        icon: "pi pi-cog",
-        command: () => navigateTo("/servicios"),
-      },
-      {
-        label: "Contacto",
-        icon: "pi pi-envelope",
-        command: () => navigateTo("/contactos"),
-      },
     ]);
 
     const navigateTo = (path) => {
