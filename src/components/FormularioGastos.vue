@@ -41,9 +41,10 @@ export default {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  background: #f9f9f9;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
 }
 input, button {
   padding: 0.5rem;

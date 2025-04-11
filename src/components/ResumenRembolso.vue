@@ -86,11 +86,12 @@ export default {
 
 <style scoped>
 .resumen-container {
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
 }
 
 h3 {
@@ -115,7 +116,7 @@ h4 {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .reembolso-item:last-child {

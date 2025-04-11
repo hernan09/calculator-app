@@ -41,10 +41,11 @@ export default {
 
 <style scoped>
 .lista-container {
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
 }
 
 h3 {
@@ -66,10 +67,11 @@ h3 {
 }
 
 .gasto-item {
-  background: #f8f9fa;
+  background: rgba(248, 249, 250, 0.8);
   padding: 1rem;
   border-radius: 0.5rem;
   position: relative;
+  backdrop-filter: blur(5px);
 }
 
 .gasto-info {
