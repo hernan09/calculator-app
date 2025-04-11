@@ -1,5 +1,5 @@
 {
-  "name": "turismocityapp",
+  "name": "calculator-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,7 +23,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
-    "node-sass": "^9.0.0",
+    "sass": "^1.69.5",
     "sass-loader": "^13.3.2"
   },
   "browserslist": [
