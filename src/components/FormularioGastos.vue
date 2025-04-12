@@ -47,6 +47,7 @@ export default {
       this.persona = '';
       this.monto = '';
       this.descripcion = '';
+      this.$emit('deseleccionar-todo');
     },
   },
 };

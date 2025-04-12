@@ -5,12 +5,18 @@
       <h1>Calculadora de Gastos Compartidos</h1>
     </header>
     <SelectoresRapidos 
-      @nombre-seleccionado="actualizarNombre" 
-      @compras-seleccionadas="actualizarDescripcion" 
+      @nombre-seleccionado="actualizarNombrePredeterminado" 
+      @compras-seleccionadas="actualizarDescripcionPredeterminada" 
+      ref="selectoresRapidos"
     />
     <div class="main-content">
       <div class="left-section">
-        <FormularioGastos @agregar="agregarGasto" :nombre-predeterminado="nombrePredeterminado" :descripcion-predeterminada="descripcionPredeterminada" />
+        <FormularioGastos 
+          @agregar="agregarGasto" 
+          :nombre-predeterminado="nombrePredeterminado" 
+          :descripcion-predeterminada="descripcionPredeterminada"
+          @deseleccionar-todo="deseleccionarTodo"
+        />
         <ListaGastos :gastos="gastos" @eliminar="eliminarGasto" />
       </div>
       <div class="right-section">
@@ -54,11 +60,14 @@ export default {
     eliminarGasto(index) {
       this.gastos.splice(index, 1);
     },
-    actualizarNombre(nombre) {
+    actualizarNombrePredeterminado(nombre) {
       this.nombrePredeterminado = nombre;
     },
-    actualizarDescripcion(descripcion) {
+    actualizarDescripcionPredeterminada(descripcion) {
       this.descripcionPredeterminada = descripcion;
+    },
+    deseleccionarTodo() {
+      this.$refs.selectoresRapidos.deseleccionarTodo();
     }
   }
 };

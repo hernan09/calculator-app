@@ -1,7 +1,7 @@
 <!-- prettier-ignore -->
 <template>
   <div class="selectores-container">
-    <div class="reel-nombres">
+    <div class="reel-nombres" ref="reelNombres">
       <div 
         v-for="nombre in nombres" 
         :key="nombre"
@@ -12,7 +12,7 @@
         {{ nombre }}
       </div>
     </div>
-    <div class="reel-compras">
+    <div class="reel-compras" ref="reelCompras">
       <div 
         v-for="(compra, index) in compras" 
         :key="index"
@@ -36,6 +36,7 @@ export default {
       nombres: ['Herna','Joni', 'Chino', 'Fabro', 'Guido', 'Gusty', 'Deo', 'Galo', 'Cris', 'Tincho', 'Nico'],
       compras: [
         { nombre: 'Bebidas', icono: '🍺' },
+        { nombre: 'Coquita', icono: '🥤' },
         { nombre: 'Carne', icono: '🥩' },
         { nombre: 'Pan', icono: '🥖' },
         { nombre: 'Verduras', icono: '🥬' },
@@ -43,13 +44,29 @@ export default {
         { nombre: 'Snacks', icono: '🍿' },
         { nombre: 'Postres', icono: '🍰' },
         { nombre: 'Condimentos', icono: '🧂' }
-      ]
+      ],
+      autoScrollTimer: null,
+      autoScrollActive: false,
+      currentScrollIndex: {
+        nombres: 0,
+        compras: 0
+      }
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.startAutoScrollTimer();
+    });
+  },
+  beforeUnmount() {
+    this.stopAutoScroll();
+    clearTimeout(this.autoScrollTimer);
   },
   methods: {
     seleccionarNombre(nombre) {
       this.nombreSeleccionado = nombre;
       this.$emit('nombre-seleccionado', nombre);
+      this.resetAutoScrollTimer();
     },
     seleccionarCompra(compra) {
       const index = this.comprasSeleccionadas.findIndex(c => c.nombre === compra.nombre);
@@ -60,6 +77,89 @@ export default {
       }
       const descripcion = this.comprasSeleccionadas.map(c => c.nombre).join(', ');
       this.$emit('compras-seleccionadas', descripcion);
+      this.resetAutoScrollTimer();
+    },
+    deseleccionarTodo() {
+      this.nombreSeleccionado = '';
+      this.comprasSeleccionadas = [];
+      this.$emit('nombre-seleccionado', '');
+      this.$emit('compras-seleccionadas', '');
+    },
+    startAutoScrollTimer() {
+      this.autoScrollTimer = setTimeout(() => {
+        this.autoScrollActive = true;
+        this.startAutoScroll();
+      }, 5000);
+    },
+    resetAutoScrollTimer() {
+      this.stopAutoScroll();
+      clearTimeout(this.autoScrollTimer);
+      this.startAutoScrollTimer();
+    },
+    startAutoScroll() {
+      if (!this.autoScrollActive) return;
+
+      const scrollNombres = () => {
+        if (!this.autoScrollActive || !this.$refs.reelNombres) return;
+        const reel = this.$refs.reelNombres;
+        const items = reel.querySelectorAll('.item-nombre');
+        if (!items.length) return;
+        
+        const itemWidth = items[0].offsetWidth + 8; // 8px for gap
+        const maxScroll = items.length * itemWidth - reel.offsetWidth;
+        
+        this.currentScrollIndex.nombres = (this.currentScrollIndex.nombres + 1) % items.length;
+        const scrollTo = Math.min(this.currentScrollIndex.nombres * itemWidth, maxScroll);
+        
+        reel.scrollTo({
+          left: scrollTo,
+          behavior: 'smooth'
+        });
+      };
+
+      const scrollCompras = () => {
+        if (!this.autoScrollActive || !this.$refs.reelCompras) return;
+        const reel = this.$refs.reelCompras;
+        const items = reel.querySelectorAll('.item-compra');
+        if (!items.length) return;
+        
+        const itemWidth = items[0].offsetWidth + 8; // 8px for gap
+        const maxScroll = items.length * itemWidth - reel.offsetWidth;
+        
+        this.currentScrollIndex.compras = (this.currentScrollIndex.compras + 1) % items.length;
+        const scrollTo = Math.min(this.currentScrollIndex.compras * itemWidth, maxScroll);
+        
+        reel.scrollTo({
+          left: scrollTo,
+          behavior: 'smooth'
+        });
+      };
+
+      // Scroll cada 2 segundos
+      this.autoScrollInterval = setInterval(() => {
+        scrollNombres();
+        scrollCompras();
+      }, 2000);
+    },
+    stopAutoScroll() {
+      this.autoScrollActive = false;
+      if (this.autoScrollInterval) {
+        clearInterval(this.autoScrollInterval);
+      }
+    }
+  },
+  watch: {
+    nombreSeleccionado(newVal) {
+      if (newVal) {
+        this.$emit('nombre-seleccionado', newVal);
+      }
+    },
+    comprasSeleccionadas: {
+      handler(newVal) {
+        const descripcion = newVal.map(c => c.nombre).join(', ');
+        this.$emit('compras-seleccionadas', descripcion);
+      },
+      deep: true
     }
   }
 };
@@ -84,6 +184,8 @@ export default {
   backdrop-filter: blur(5px);
   scrollbar-width: thin;
   scrollbar-color: #007ad9 rgba(255, 255, 255, 0.1);
+  scroll-behavior: smooth;
+  transition: scroll-left 0.5s ease;
 }
 
 .reel-nombres::-webkit-scrollbar,
