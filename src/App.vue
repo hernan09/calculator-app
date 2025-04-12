@@ -3,11 +3,16 @@
   <div class="app-container">
     <header class="app-header">
       <h1>Calculadora de Gastos Compartidos</h1>
+      <div class="wave-border">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path fill="#ffffff" fill-opacity="1" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,170.7C960,181,1056,171,1152,154.7C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+      </div>
     </header>
     <SelectoresRapidos 
-      @nombre-seleccionado="actualizarNombrePredeterminado" 
-      @compras-seleccionadas="actualizarDescripcionPredeterminada" 
       ref="selectoresRapidos"
+      @nombre-seleccionado="actualizarNombre" 
+      @compras-seleccionadas="actualizarDescripcion" 
     />
     <div class="main-content">
       <div class="left-section">
@@ -56,18 +61,22 @@ export default {
       // Limpiar los valores predeterminados después de agregar
       this.nombrePredeterminado = '';
       this.descripcionPredeterminada = '';
+      // Deseleccionar los reels
+      this.deseleccionarTodo();
     },
     eliminarGasto(index) {
       this.gastos.splice(index, 1);
     },
-    actualizarNombrePredeterminado(nombre) {
+    actualizarNombre(nombre) {
       this.nombrePredeterminado = nombre;
     },
-    actualizarDescripcionPredeterminada(descripcion) {
+    actualizarDescripcion(descripcion) {
       this.descripcionPredeterminada = descripcion;
     },
     deseleccionarTodo() {
-      this.$refs.selectoresRapidos.deseleccionarTodo();
+      if (this.$refs.selectoresRapidos) {
+        this.$refs.selectoresRapidos.deseleccionarTodo();
+      }
     }
   }
 };
@@ -85,11 +94,6 @@ body {
   line-height: 1.6;
   background-color: #f5f5f5;
   padding: 1rem;
-  min-height: 100vh;
-  background-image: url('./assets/images/fondo.svg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
 }
 
 .app-container {
@@ -97,37 +101,36 @@ body {
   margin: 0 auto;
 }
 
-.app-header {
-  background-image: url('./assets/images/fondo.svg');
-  background-size: cover;
-  background-position: center;
-  padding: 2rem;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  position: relative;
+.wave-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  line-height: 0;
   overflow: hidden;
 }
 
-.app-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 1;
+.wave-border svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+.app-header {
+  position: relative;
+  background: linear-gradient(135deg, #007ad9, #2da59f);
+  padding: 2rem 1rem 4rem;
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
 .app-header h1 {
-  position: relative;
-  z-index: 2;
   text-align: center;
-  color: #2c3e50;
-  margin: 0;
-  font-size: 2rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 3;
 }
 
 .main-content {

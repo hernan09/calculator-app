@@ -71,7 +71,7 @@ input, button {
   border-radius: 0.5rem;
 }
 button {
-  background: #007ad9;
+  background: #57aec9;
   color: white;
   border: none;
   cursor: pointer;
