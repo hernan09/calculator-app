@@ -12,12 +12,30 @@
 <script>
 export default {
   name: 'FormularioGastos',
+  props: {
+    nombrePredeterminado: {
+      type: String,
+      default: ''
+    },
+    descripcionPredeterminada: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       persona: '',
       monto: '',
       descripcion: '',
     };
+  },
+  watch: {
+    nombrePredeterminado(newVal) {
+      this.persona = newVal;
+    },
+    descripcionPredeterminada(newVal) {
+      this.descripcion = newVal;
+    }
   },
   methods: {
     agregarGasto() {
