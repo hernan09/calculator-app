@@ -33,7 +33,7 @@ export default {
     return {
       nombreSeleccionado: '',
       comprasSeleccionadas: [],
-      nombres: ['Joni', 'Chino', 'Fabro', 'Guido', 'Gusty', 'Deo', 'Galo', 'Cris', 'Tincho', 'Nico'],
+      nombres: ['Herna','Joni', 'Chino', 'Fabro', 'Guido', 'Gusty', 'Deo', 'Galo', 'Cris', 'Tincho', 'Nico'],
       compras: [
         { nombre: 'Bebidas', icono: '🍺' },
         { nombre: 'Carne', icono: '🥩' },
